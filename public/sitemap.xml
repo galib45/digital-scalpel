@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://digital-scalpel.netlify.app/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/about/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/medical/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/medical/abortion/</loc>
+        <lastmod>2022-07-08</lastmod>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/medical/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tech/</loc>
+    </url>
+</urlset>

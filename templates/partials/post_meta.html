@@ -1,0 +1,12 @@
+{% set meta = [] %}
+
+{% set formatted_date_long = page.date | date(format="%B %e, %Y") %}
+{% set formatted_date_short = page.date | date(format="%B %e, %Y") %}
+{% set meta = meta | concat(with='<span title="' ~ formatted_date_long ~ '">' ~ formatted_date_short ~ '</span>') %}
+
+{% set meta = meta | concat(with=page.reading_time ~ " min") %}
+
+{% set meta = meta | concat(with=page.word_count ~ " words") %}
+
+{% set meta = meta | concat(with=page.author | default(value=config.author)) %}
+{{ meta | join(sep="&nbsp;·&nbsp;") | safe }}

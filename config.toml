@@ -1,5 +1,7 @@
 # The URL the site will be built for
 base_url = "https://digital-scalpel.netlify.app"
+title = "Digital Scalpel"
+author = "Asadul Al Galib"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = false
@@ -14,3 +16,12 @@ highlight_code = true
 
 [extra]
 # Put all your custom variables here
+
+[extra.papermod]
+default_theme = "auto"
+theme = "light"
+navigation = [
+    { url = "$BASE_URL/tech", title = "Tech" },
+    { url = "$BASE_URL/medical", title = "Medical" },
+    { url = "$BASE_URL/about", title = "About" },
+]
