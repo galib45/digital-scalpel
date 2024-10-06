@@ -872,6 +872,9 @@ img.in-text {
   transform: scale(0.98);
   border: 2px solid var(--tertiary);
 }
+ul.terms-tags, ul.post-tags {
+  padding: 0;
+}
 .terms-tags li {
   display: inline-block;
   margin: 10px;

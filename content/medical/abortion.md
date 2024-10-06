@@ -1,7 +1,11 @@
 +++
 title = "Abortion"
 date = "2022-07-08"
+
+[taxonomies]
+tags = ["obstetrics"]
 +++
+
 Any interruption of pregnancy beyond the age of viability with or without expulsion of the product of conception.
 
 ## Threatened Abortion

@@ -5,7 +5,7 @@
   </header>
   {% if page.summary %}
   <div class="entry-content">
-      <p>{{ page.summary |safe }}</p>
+      <p>{{ page.summary | safe }}</p>
   </div>
   {% endif %}
   <footer class="entry-footer">
@@ -15,7 +15,6 @@
 </article>
 {% endfor %}
 
-{% if paginator %}
 <footer class="page-footer">
     <nav class="pagination">
     {% if paginator.previous %}
@@ -26,4 +25,3 @@
     {% endif %}
     </nav>
 </footer>
-{% endif %}
