@@ -66,12 +66,41 @@
         <loc>https://digital-scalpel.netlify.app/tags/</loc>
     </url>
     <url>
+        <loc>https://digital-scalpel.netlify.app/tags/debian/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tags/hyprland/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tags/installation/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tags/linux/</loc>
+    </url>
+    <url>
         <loc>https://digital-scalpel.netlify.app/tags/obstetrics/</loc>
     </url>
     <url>
         <loc>https://digital-scalpel.netlify.app/tags/orthopedics/</loc>
     </url>
     <url>
+        <loc>https://digital-scalpel.netlify.app/tags/voidlinux/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tags/wayland/</loc>
+    </url>
+    <url>
         <loc>https://digital-scalpel.netlify.app/tech/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tech/install-void-linux-from-debian/</loc>
+        <lastmod>2024-10-07T20:39:49</lastmod>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tech/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://digital-scalpel.netlify.app/tech/setup-hyprland-in-bare-metal-void-linux/</loc>
+        <lastmod>2024-10-08T00:47:38</lastmod>
     </url>
 </urlset>

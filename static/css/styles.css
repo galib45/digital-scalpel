@@ -101,6 +101,16 @@ table {
 /* ul { */
 /*   padding: 0; */
 /* } */
+.header {
+  padding-bottom: 1rem;
+}
+div.logo {
+  margin-bottom: -1rem;
+}
+ul#menu {
+  padding: 0;
+  margin-bottom: -1rem;
+}
 .entry-header > h2 {
   margin-top: 0;
   margin-bottom: 0.5rem;

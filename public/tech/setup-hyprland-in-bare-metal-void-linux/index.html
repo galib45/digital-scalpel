@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Digital Scalpel</title>
+<title>Setup Hyprland in bare metal Void Linux</title>
 
 
 
@@ -19,7 +19,7 @@
 <meta name="author" content="Asadul Al Galib">
 
 
-<link rel="canonical" href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tech&#x2F;">
+<link rel="canonical" href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tech&#x2F;setup-hyprland-in-bare-metal-void-linux&#x2F;">
 
 
 <link rel="stylesheet" href="https://digital-scalpel.netlify.app/css/includes/scroll-bar.css">
@@ -75,7 +75,7 @@
 
     
 </head>
-<body class="list " id="top">
+<body class="" id="top">
     
     
 <script>
@@ -127,7 +127,7 @@
             
             <li>
                 <a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tech" title="Tech">
-                    <span class="active">Tech</span>
+                    <span>Tech</span>
                     
                 </a>
             </li>
@@ -167,16 +167,19 @@
     
     <main class="main">
         
-<h1>Tech</h1>
-
-    
-        
-<article class="post-entry">
-  <header class="entry-header">
-      <h2>Setup Hyprland in bare metal Void Linux</h2>
-  </header>
-  
-  <footer class="entry-footer">
+<article class="post-single">
+  <header class="post-header">
+      <div class="breadcrumbs">
+          <a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app">Home</a>&nbsp;»&nbsp;
+          
+          
+          <a href="https://digital-scalpel.netlify.app/tech/">Tech</a>&nbsp;»&nbsp;
+          <a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tech&#x2F;setup-hyprland-in-bare-metal-void-linux&#x2F;">Setup Hyprland in bare metal Void Linux</a>
+      </div>
+      <h1 class="post-title">Setup Hyprland in bare metal Void Linux</h1>
+      
+      
+      <div class="post-meta">
       
 
 
@@ -190,43 +193,142 @@
 
 <span title="October  8, 2024">October  8, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;110 words&nbsp;·&nbsp;Asadul Al Galib
 
-  </footer>
-  <a class="entry-link" aria-label="post link to Setup Hyprland in bare metal Void Linux" href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tech&#x2F;setup-hyprland-in-bare-metal-void-linux&#x2F;"></a>
-</article>
-
-<article class="post-entry">
-  <header class="entry-header">
-      <h2>Install Void Linux from Debian</h2>
+      
+      </div>
+      
   </header>
+
   
-  <footer class="entry-footer">
+  
+
+<div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner">
+            <ul>
+                
+                <li>
+                    <a href="#configure-the-timezone" aria-label="Configure the timezone">Configure the timezone</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#install-fonts" aria-label="Install fonts">Install fonts</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#install-necessary-programs" aria-label="Install necessary programs">Install necessary programs</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#install-hyprland" aria-label="Install hyprland">Install hyprland</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#enable-necessary-services" aria-label="Enable necessary services">Enable necessary services</a>
+                    
+                </li>
+                
+            </ul>
+        </div>
+    </details>
+</div>
+
+
+  
+
+  
+  <div class="post-content">
+      <p>All the commands with sudo in front can be run from the root account or the chroot environment without writing sudo in front.</p>
+<h2 id="configure-the-timezone">Configure the timezone</h2>
+<p>Information about timezones are stored in the <code>/usr/share/zoneinfo/</code> directory. As I live in Dhaka, my zoneinfo file is located at <code>/usr/share/zoneinfo/Asia/Dhaka</code>.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo ln -sf /usr/share/zoneinfo/&lt;timezone&gt; /etc/localtime
+</span></code></pre>
+<h2 id="install-fonts">Install fonts</h2>
+<p>Here we are installing a nerd font (I like Iosevka) and a Bangla font as because I am Bangladeshi.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo xbps-install xz unzip aria2
+</span><span>aria2c https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Iosevka.tar.xz
+</span><span>aria2c https://ekushey.org/download-font?cp-ekushey-font-id=70
+</span><span>
+</span><span>sudo mkdir -p /usr/share/fonts/iosevka
+</span><span>sudo mkdir -p /usr/share/fonts/solaimanlipi
+</span><span>
+</span><span>sudo tar xvf Iosevka.tar.xz -C /usr/share/fonts/iosevka
+</span><span>sudo unzip SolaimanLipi.zip -d /usr/share/fonts/solaimanlipi
+</span><span>
+</span><span>rm Iosevka.tar.xz SolaimanLipi.zip
+</span></code></pre>
+<h2 id="install-necessary-programs">Install necessary programs</h2>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo xbps-install mesa-dri elogind polkit Waybar wofi kitty chromium nwg-look
+</span></code></pre>
+<h2 id="install-hyprland">Install hyprland</h2>
+<p>Add the hyprland repository</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo echo &quot;repository=https://raw.githubusercontent.com/Makrennel/hyprland-void/repository-x86_64-glibc&quot; &gt; /etc/xbps.d/hyprland-void.conf
+</span></code></pre>
+<p>Sync repositories</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo xbps-install -S
+</span></code></pre>
+<p>Install hyprland and xdg-desktop-portal-hyprland</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo xbps-install hyprland xdg-desktop-portal-hyprland
+</span></code></pre>
+<h2 id="enable-necessary-services">Enable necessary services</h2>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>ln -s /etc/sv/elogind /etc/runit/runsvdir/default/ 
+</span><span>ln -s /etc/sv/polkitd /etc/runit/runsvdir/default/
+</span></code></pre>
+<p>Now reboot and after login type <code>hyprland</code> in the tty and it will launch hyprland.</p>
+
+  </div>
+  
+
+  <footer class="post-footer">
+      
+      <ul class="post-tags">
+          
+          
+          <li><a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tags&#x2F;voidlinux&#x2F;">voidlinux</a></li>
+          
+          
+          <li><a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tags&#x2F;hyprland&#x2F;">hyprland</a></li>
+          
+          
+          <li><a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tags&#x2F;wayland&#x2F;">wayland</a></li>
+          
+          
+          <li><a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tags&#x2F;linux&#x2F;">linux</a></li>
+          
+          
+          <li><a href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tags&#x2F;installation&#x2F;">installation</a></li>
+          
+      </ul>
       
 
+    
+    
 
 
+<nav class="paginav">
+    
+    <a class="prev" href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tech&#x2F;install-void-linux-from-debian&#x2F;">
+        <span class="title">« Prev</span>
+        <br>
+        <span>Install Void Linux from Debian</span>
+    </a>
+    
+    
+</nav>
 
 
-
-
-
-
-
-<span title="October  7, 2024">October  7, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;453 words&nbsp;·&nbsp;Asadul Al Galib
-
+    
+    
   </footer>
-  <a class="entry-link" aria-label="post link to Install Void Linux from Debian" href="https:&#x2F;&#x2F;digital-scalpel.netlify.app&#x2F;tech&#x2F;install-void-linux-from-debian&#x2F;"></a>
+
 </article>
-
-
-<footer class="page-footer">
-    <nav class="pagination">
-    
-    
-    </nav>
-</footer>
-
-    
-
 
     </main>
     
