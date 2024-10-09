@@ -191,7 +191,7 @@
 
 
 
-<span title="October  7, 2024">October  7, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;453 words&nbsp;·&nbsp;Asadul Al Galib
+<span title="October  7, 2024">October  7, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;454 words&nbsp;·&nbsp;Asadul Al Galib
 
       
       </div>
@@ -262,14 +262,14 @@
   <div class="post-content">
       <h2 id="download-the-installation-media">Download the installation media</h2>
 <p>At first, go to the <a href="https://voidlinux.org/download/">download page</a> of void linux and download rootfs tarball (i downloaded the glibc version).</p>
-<p><img src="/tech/grabbing-the-rootfs-tarball.png" alt="grabbing the rootfs tarball" /></p>
+<p><img src="/images/grabbing-the-rootfs-tarball.png" alt="grabbing the rootfs tarball" /></p>
 <h2 id="create-partitions">Create partitions</h2>
 <p>For simplicity, i created only the root partition <code>/</code>, no swap, no EFI partition. My existing system already has an EFI partition mounted at <code>/boot/efi</code>. I used <a href="https://gparted.org/">gparted</a> for creating partitions.</p>
 <p>Launch gparted and manage some unallocated space. I shrunk one of my existing partitions and kept 80 GB of unallocated space.
-<img src="/tech/unallocated-space.png" alt="unallocated-space" /></p>
+<img src="/images/unallocated-space.png" alt="unallocated-space" /></p>
 <p>Now create a partition in that space and format it to ext4.
-<img src="/tech/create-partition.png" alt="create-partition" />
-<img src="/tech/confirm-create-partition.png" alt="confirm-create-partition" />
+<img src="/images/create-partition.png" alt="create-partition" />
+<img src="/images/confirm-create-partition.png" alt="confirm-create-partition" />
 This will create a new 80 GB ext4 partition and it will be named as <code>/dev/sdXY</code> or <code>/dev/nvmeXnYpZ</code>. On my device the new partition is <code>/dev/sda8</code>.</p>
 <h2 id="create-a-chroot-environment">Create a chroot environment</h2>
 <ul>
@@ -279,25 +279,17 @@ This will create a new 80 GB ext4 partition and it will be named as <code>/dev/s
 </span><span>sudo tar xvf path/to/the/tarball -C /mnt
 </span></code></pre>
 <ul>
-<li>Now copy <code>/etc/resolv.conf</code> and <code>/etc/hosts</code> from your system to <code>/mnt</code> (required for network access in the chroot).</li>
+<li>Now download the xchroot program from xtools repository &amp; make it executable.</li>
 </ul>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
-</span><span>sudo cp /etc/hosts /mnt/etc/hosts
-</span></code></pre>
-<ul>
-<li>Mount the <code>proc</code>, <code>sys</code>, <code>dev</code>, <code>run</code> virtual filesystems.</li>
-</ul>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo mount -t proc none /mnt/proc
-</span><span>sudo mount -t sysfs none /mnt/sys
-</span><span>sudo mount --rbind /dev /mnt/dev
-</span><span>sudo mount --rbind /run /mnt/run
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>wget https://raw.githubusercontent.com/leahneukirchen/xtools/refs/heads/master/xchroot
+</span><span>chmod +x xchroot
 </span></code></pre>
 <ul>
 <li>Now enter the chroot.</li>
 </ul>
-<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo chroot /mnt /bin/bash
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>sudo ./xchroot /mnt /bin/bash
 </span></code></pre>
-<p><img src="/tech/enter-chroot.png" alt="enter-chroot" /></p>
+<p><img src="/images/enter-chroot.png" alt="enter-chroot" /></p>
 <h2 id="install-the-base-system">Install the base system</h2>
 <pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>xbps-install -Su xbps
 </span><span>xbps-install -u
@@ -321,20 +313,21 @@ This will create a new 80 GB ext4 partition and it will be named as <code>/dev/s
 </span><span>EDITOR=nvim visudo
 </span></code></pre>
 <p>Uncomment the following line to allow users of the wheel group root permissions.
-<img src="/tech/visudo.png" alt="visudo" /></p>
+<img src="/images/visudo.png" alt="visudo" /></p>
 <h2 id="configure-the-etc-fstab-file">Configure the <code>/etc/fstab</code> file.</h2>
-<p>It is the file that defines where to mount which partition. The root partition is at <code>/dev/sda8</code> in my case.
+<p>It is the file that defines where to mount which partition on boot automatically. The root partition is at <code>/dev/sda8</code> in my case.
 Find the EFI partition from debian. No need to exit the chroot, just launch another terminal and run <code>lsblk</code>. Look for the partition mounted at <code>/boot/efi</code> which is <code>/dev/sda1</code> in my case.
-<img src="/tech/boot-efi.png" alt="boot-efi" />
+<img src="/images/boot-efi.png" alt="boot-efi" />
 Write the <code>/etc/fstab</code> file as follows</p>
 <pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>echo &quot;/dev/sda8 / ext4 rw,relatime 0 1&quot; &gt; /etc/fstab
 </span><span>echo &quot;/dev/sda1 /boot/efi vfat rw,relatime,umask=0077,errors=remount-ro 0 2&quot; &gt;&gt; /etc/fstab
 </span><span>echo &quot;tmpfs /tmp tmpfs defaults,nosuid,nodev 0 0&quot; &gt;&gt; /etc/fstab
 </span></code></pre>
 <p>Now use the <code>blkid</code> command to get the UUID of the partitions and replace <code>/dev/sdXX</code>s with their UUIDs in the <code>/etc/fstab</code> file.
-<img src="/tech/blkid.png" alt="blkid" />
+<img src="/images/blkid.png" alt="blkid" />
 Now the <code>/etc/fstab</code> file should look like this
-<img src="/tech/etc-fstab.png" alt="fstab" /></p>
+<img src="/images/etc-fstab.png" alt="fstab" />
+Make the <code>/boot/efi</code> directory because we did not mount it in the chroot</p>
 <h2 id="installing-networkmanager">Installing NetworkManager</h2>
 <p>Install NetworkManager to manage wired and wireless networks.</p>
 <pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>xbps-install NetworkManager

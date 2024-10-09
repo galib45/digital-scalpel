@@ -30,7 +30,7 @@ rm Iosevka.tar.xz SolaimanLipi.zip
 
 ## Install necessary programs
 ```
-sudo xbps-install mesa-dri elogind polkit Waybar wofi kitty chromium nwg-look
+sudo xbps-install mesa-dri elogind polkit Waybar wofi kitty chromium nwg-look pulseaudio pavucontrol network-manager-applet
 ```
 
 ## Install hyprland
@@ -53,4 +53,4 @@ ln -s /etc/sv/elogind /etc/runit/runsvdir/default/
 ln -s /etc/sv/polkitd /etc/runit/runsvdir/default/
 ```
 
-Now reboot and after login type `hyprland` in the tty and it will launch hyprland.
+Now reboot and after login type `Hyprland` in the tty and it will launch hyprland.

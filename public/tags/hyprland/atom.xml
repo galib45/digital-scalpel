@@ -42,7 +42,7 @@
 &lt;&#x2F;span&gt;&lt;span&gt;rm Iosevka.tar.xz SolaimanLipi.zip
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;install-necessary-programs&quot;&gt;Install necessary programs&lt;&#x2F;h2&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo xbps-install mesa-dri elogind polkit Waybar wofi kitty chromium nwg-look
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo xbps-install mesa-dri elogind polkit Waybar wofi kitty chromium nwg-look pulseaudio pavucontrol network-manager-applet
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;install-hyprland&quot;&gt;Install hyprland&lt;&#x2F;h2&gt;
 &lt;p&gt;Add the hyprland repository&lt;&#x2F;p&gt;
@@ -58,7 +58,7 @@
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;ln -s &#x2F;etc&#x2F;sv&#x2F;elogind &#x2F;etc&#x2F;runit&#x2F;runsvdir&#x2F;default&#x2F; 
 &lt;&#x2F;span&gt;&lt;span&gt;ln -s &#x2F;etc&#x2F;sv&#x2F;polkitd &#x2F;etc&#x2F;runit&#x2F;runsvdir&#x2F;default&#x2F;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Now reboot and after login type &lt;code&gt;hyprland&lt;&#x2F;code&gt; in the tty and it will launch hyprland.&lt;&#x2F;p&gt;
+&lt;p&gt;Now reboot and after login type &lt;code&gt;Hyprland&lt;&#x2F;code&gt; in the tty and it will launch hyprland.&lt;&#x2F;p&gt;
 </content>
         
     </entry>

@@ -6,17 +6,17 @@ taxonomies.tags = ["voidlinux", "debian", "linux", "installation"]
 ## Download the installation media
 At first, go to the [download page](https://voidlinux.org/download/) of void linux and download rootfs tarball (i downloaded the glibc version).
 
-![grabbing the rootfs tarball](/tech/grabbing-the-rootfs-tarball.png)
+![grabbing the rootfs tarball](/images/grabbing-the-rootfs-tarball.png)
 
 ## Create partitions
 For simplicity, i created only the root partition `/`, no swap, no EFI partition. My existing system already has an EFI partition mounted at `/boot/efi`. I used [gparted](https://gparted.org/) for creating partitions.
 
 Launch gparted and manage some unallocated space. I shrunk one of my existing partitions and kept 80 GB of unallocated space.
-![unallocated-space](/tech/unallocated-space.png)
+![unallocated-space](/images/unallocated-space.png)
 
 Now create a partition in that space and format it to ext4.
-![create-partition](/tech/create-partition.png)
-![confirm-create-partition](/tech/confirm-create-partition.png)
+![create-partition](/images/create-partition.png)
+![confirm-create-partition](/images/confirm-create-partition.png)
 This will create a new 80 GB ext4 partition and it will be named as `/dev/sdXY` or `/dev/nvmeXnYpZ`. On my device the new partition is `/dev/sda8`.
 
 ## Create a chroot environment
@@ -25,23 +25,16 @@ This will create a new 80 GB ext4 partition and it will be named as `/dev/sdXY` 
 sudo mount /dev/sda8 /mnt
 sudo tar xvf path/to/the/tarball -C /mnt
 ```
-- Now copy `/etc/resolv.conf` and `/etc/hosts` from your system to `/mnt` (required for network access in the chroot). 
+- Now download the xchroot program from xtools repository & make it executable.
 ```
-sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
-sudo cp /etc/hosts /mnt/etc/hosts
-```
-- Mount the `proc`, `sys`, `dev`, `run` virtual filesystems.
-```
-sudo mount -t proc none /mnt/proc
-sudo mount -t sysfs none /mnt/sys
-sudo mount --rbind /dev /mnt/dev
-sudo mount --rbind /run /mnt/run
+wget https://raw.githubusercontent.com/leahneukirchen/xtools/refs/heads/master/xchroot
+chmod +x xchroot
 ```
 - Now enter the chroot.
 ```
-sudo chroot /mnt /bin/bash
+sudo ./xchroot /mnt /bin/bash
 ```
-![enter-chroot](/tech/enter-chroot.png)
+![enter-chroot](/images/enter-chroot.png)
 
 ## Install the base system
 ```
@@ -72,12 +65,12 @@ passwd name_of_user
 EDITOR=nvim visudo
 ```
 Uncomment the following line to allow users of the wheel group root permissions.
-![visudo](/tech/visudo.png)
+![visudo](/images/visudo.png)
 
 ## Configure the `/etc/fstab` file. 
-It is the file that defines where to mount which partition. The root partition is at `/dev/sda8` in my case. 
+It is the file that defines where to mount which partition on boot automatically. The root partition is at `/dev/sda8` in my case. 
 Find the EFI partition from debian. No need to exit the chroot, just launch another terminal and run `lsblk`. Look for the partition mounted at `/boot/efi` which is `/dev/sda1` in my case.
-![boot-efi](/tech/boot-efi.png)
+![boot-efi](/images/boot-efi.png)
 Write the `/etc/fstab` file as follows
 ```
 echo "/dev/sda8 / ext4 rw,relatime 0 1" > /etc/fstab
@@ -85,9 +78,10 @@ echo "/dev/sda1 /boot/efi vfat rw,relatime,umask=0077,errors=remount-ro 0 2" >> 
 echo "tmpfs /tmp tmpfs defaults,nosuid,nodev 0 0" >> /etc/fstab
 ```
 Now use the `blkid` command to get the UUID of the partitions and replace `/dev/sdXX`s with their UUIDs in the `/etc/fstab` file.
-![blkid](/tech/blkid.png)
+![blkid](/images/blkid.png)
 Now the `/etc/fstab` file should look like this
-![fstab](/tech/etc-fstab.png)
+![fstab](/images/etc-fstab.png)
+Make the `/boot/efi` directory because we did not mount it in the chroot
 
 ## Installing NetworkManager
 Install NetworkManager to manage wired and wireless networks. 

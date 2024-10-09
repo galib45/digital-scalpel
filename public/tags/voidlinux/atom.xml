@@ -42,7 +42,7 @@
 &lt;&#x2F;span&gt;&lt;span&gt;rm Iosevka.tar.xz SolaimanLipi.zip
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;install-necessary-programs&quot;&gt;Install necessary programs&lt;&#x2F;h2&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo xbps-install mesa-dri elogind polkit Waybar wofi kitty chromium nwg-look
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo xbps-install mesa-dri elogind polkit Waybar wofi kitty chromium nwg-look pulseaudio pavucontrol network-manager-applet
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;install-hyprland&quot;&gt;Install hyprland&lt;&#x2F;h2&gt;
 &lt;p&gt;Add the hyprland repository&lt;&#x2F;p&gt;
@@ -58,7 +58,7 @@
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;ln -s &#x2F;etc&#x2F;sv&#x2F;elogind &#x2F;etc&#x2F;runit&#x2F;runsvdir&#x2F;default&#x2F; 
 &lt;&#x2F;span&gt;&lt;span&gt;ln -s &#x2F;etc&#x2F;sv&#x2F;polkitd &#x2F;etc&#x2F;runit&#x2F;runsvdir&#x2F;default&#x2F;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Now reboot and after login type &lt;code&gt;hyprland&lt;&#x2F;code&gt; in the tty and it will launch hyprland.&lt;&#x2F;p&gt;
+&lt;p&gt;Now reboot and after login type &lt;code&gt;Hyprland&lt;&#x2F;code&gt; in the tty and it will launch hyprland.&lt;&#x2F;p&gt;
 </content>
         
     </entry>
@@ -80,14 +80,14 @@
         
         <content type="html" xml:base="https://digital-scalpel.netlify.app/tech/install-void-linux-from-debian/">&lt;h2 id=&quot;download-the-installation-media&quot;&gt;Download the installation media&lt;&#x2F;h2&gt;
 &lt;p&gt;At first, go to the &lt;a href=&quot;https:&#x2F;&#x2F;voidlinux.org&#x2F;download&#x2F;&quot;&gt;download page&lt;&#x2F;a&gt; of void linux and download rootfs tarball (i downloaded the glibc version).&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;img src=&quot;&#x2F;tech&#x2F;grabbing-the-rootfs-tarball.png&quot; alt=&quot;grabbing the rootfs tarball&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;grabbing-the-rootfs-tarball.png&quot; alt=&quot;grabbing the rootfs tarball&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;create-partitions&quot;&gt;Create partitions&lt;&#x2F;h2&gt;
 &lt;p&gt;For simplicity, i created only the root partition &lt;code&gt;&#x2F;&lt;&#x2F;code&gt;, no swap, no EFI partition. My existing system already has an EFI partition mounted at &lt;code&gt;&#x2F;boot&#x2F;efi&lt;&#x2F;code&gt;. I used &lt;a href=&quot;https:&#x2F;&#x2F;gparted.org&#x2F;&quot;&gt;gparted&lt;&#x2F;a&gt; for creating partitions.&lt;&#x2F;p&gt;
 &lt;p&gt;Launch gparted and manage some unallocated space. I shrunk one of my existing partitions and kept 80 GB of unallocated space.
-&lt;img src=&quot;&#x2F;tech&#x2F;unallocated-space.png&quot; alt=&quot;unallocated-space&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;unallocated-space.png&quot; alt=&quot;unallocated-space&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Now create a partition in that space and format it to ext4.
-&lt;img src=&quot;&#x2F;tech&#x2F;create-partition.png&quot; alt=&quot;create-partition&quot; &#x2F;&gt;
-&lt;img src=&quot;&#x2F;tech&#x2F;confirm-create-partition.png&quot; alt=&quot;confirm-create-partition&quot; &#x2F;&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;create-partition.png&quot; alt=&quot;create-partition&quot; &#x2F;&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;confirm-create-partition.png&quot; alt=&quot;confirm-create-partition&quot; &#x2F;&gt;
 This will create a new 80 GB ext4 partition and it will be named as &lt;code&gt;&#x2F;dev&#x2F;sdXY&lt;&#x2F;code&gt; or &lt;code&gt;&#x2F;dev&#x2F;nvmeXnYpZ&lt;&#x2F;code&gt;. On my device the new partition is &lt;code&gt;&#x2F;dev&#x2F;sda8&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;create-a-chroot-environment&quot;&gt;Create a chroot environment&lt;&#x2F;h2&gt;
 &lt;ul&gt;
@@ -97,25 +97,17 @@ This will create a new 80 GB ext4 partition and it will be named as &lt;code&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;sudo tar xvf path&#x2F;to&#x2F;the&#x2F;tarball -C &#x2F;mnt
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;ul&gt;
-&lt;li&gt;Now copy &lt;code&gt;&#x2F;etc&#x2F;resolv.conf&lt;&#x2F;code&gt; and &lt;code&gt;&#x2F;etc&#x2F;hosts&lt;&#x2F;code&gt; from your system to &lt;code&gt;&#x2F;mnt&lt;&#x2F;code&gt; (required for network access in the chroot).&lt;&#x2F;li&gt;
+&lt;li&gt;Now download the xchroot program from xtools repository &amp;amp; make it executable.&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo cp &#x2F;etc&#x2F;resolv.conf &#x2F;mnt&#x2F;etc&#x2F;resolv.conf
-&lt;&#x2F;span&gt;&lt;span&gt;sudo cp &#x2F;etc&#x2F;hosts &#x2F;mnt&#x2F;etc&#x2F;hosts
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;ul&gt;
-&lt;li&gt;Mount the &lt;code&gt;proc&lt;&#x2F;code&gt;, &lt;code&gt;sys&lt;&#x2F;code&gt;, &lt;code&gt;dev&lt;&#x2F;code&gt;, &lt;code&gt;run&lt;&#x2F;code&gt; virtual filesystems.&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo mount -t proc none &#x2F;mnt&#x2F;proc
-&lt;&#x2F;span&gt;&lt;span&gt;sudo mount -t sysfs none &#x2F;mnt&#x2F;sys
-&lt;&#x2F;span&gt;&lt;span&gt;sudo mount --rbind &#x2F;dev &#x2F;mnt&#x2F;dev
-&lt;&#x2F;span&gt;&lt;span&gt;sudo mount --rbind &#x2F;run &#x2F;mnt&#x2F;run
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;wget https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;leahneukirchen&#x2F;xtools&#x2F;refs&#x2F;heads&#x2F;master&#x2F;xchroot
+&lt;&#x2F;span&gt;&lt;span&gt;chmod +x xchroot
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;ul&gt;
 &lt;li&gt;Now enter the chroot.&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo chroot &#x2F;mnt &#x2F;bin&#x2F;bash
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;sudo .&#x2F;xchroot &#x2F;mnt &#x2F;bin&#x2F;bash
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;&lt;img src=&quot;&#x2F;tech&#x2F;enter-chroot.png&quot; alt=&quot;enter-chroot&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;enter-chroot.png&quot; alt=&quot;enter-chroot&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;install-the-base-system&quot;&gt;Install the base system&lt;&#x2F;h2&gt;
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;xbps-install -Su xbps
 &lt;&#x2F;span&gt;&lt;span&gt;xbps-install -u
@@ -139,20 +131,21 @@ This will create a new 80 GB ext4 partition and it will be named as &lt;code&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;EDITOR=nvim visudo
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Uncomment the following line to allow users of the wheel group root permissions.
-&lt;img src=&quot;&#x2F;tech&#x2F;visudo.png&quot; alt=&quot;visudo&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;visudo.png&quot; alt=&quot;visudo&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;configure-the-etc-fstab-file&quot;&gt;Configure the &lt;code&gt;&#x2F;etc&#x2F;fstab&lt;&#x2F;code&gt; file.&lt;&#x2F;h2&gt;
-&lt;p&gt;It is the file that defines where to mount which partition. The root partition is at &lt;code&gt;&#x2F;dev&#x2F;sda8&lt;&#x2F;code&gt; in my case.
+&lt;p&gt;It is the file that defines where to mount which partition on boot automatically. The root partition is at &lt;code&gt;&#x2F;dev&#x2F;sda8&lt;&#x2F;code&gt; in my case.
 Find the EFI partition from debian. No need to exit the chroot, just launch another terminal and run &lt;code&gt;lsblk&lt;&#x2F;code&gt;. Look for the partition mounted at &lt;code&gt;&#x2F;boot&#x2F;efi&lt;&#x2F;code&gt; which is &lt;code&gt;&#x2F;dev&#x2F;sda1&lt;&#x2F;code&gt; in my case.
-&lt;img src=&quot;&#x2F;tech&#x2F;boot-efi.png&quot; alt=&quot;boot-efi&quot; &#x2F;&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;boot-efi.png&quot; alt=&quot;boot-efi&quot; &#x2F;&gt;
 Write the &lt;code&gt;&#x2F;etc&#x2F;fstab&lt;&#x2F;code&gt; file as follows&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;echo &amp;quot;&#x2F;dev&#x2F;sda8 &#x2F; ext4 rw,relatime 0 1&amp;quot; &amp;gt; &#x2F;etc&#x2F;fstab
 &lt;&#x2F;span&gt;&lt;span&gt;echo &amp;quot;&#x2F;dev&#x2F;sda1 &#x2F;boot&#x2F;efi vfat rw,relatime,umask=0077,errors=remount-ro 0 2&amp;quot; &amp;gt;&amp;gt; &#x2F;etc&#x2F;fstab
 &lt;&#x2F;span&gt;&lt;span&gt;echo &amp;quot;tmpfs &#x2F;tmp tmpfs defaults,nosuid,nodev 0 0&amp;quot; &amp;gt;&amp;gt; &#x2F;etc&#x2F;fstab
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Now use the &lt;code&gt;blkid&lt;&#x2F;code&gt; command to get the UUID of the partitions and replace &lt;code&gt;&#x2F;dev&#x2F;sdXX&lt;&#x2F;code&gt;s with their UUIDs in the &lt;code&gt;&#x2F;etc&#x2F;fstab&lt;&#x2F;code&gt; file.
-&lt;img src=&quot;&#x2F;tech&#x2F;blkid.png&quot; alt=&quot;blkid&quot; &#x2F;&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;blkid.png&quot; alt=&quot;blkid&quot; &#x2F;&gt;
 Now the &lt;code&gt;&#x2F;etc&#x2F;fstab&lt;&#x2F;code&gt; file should look like this
-&lt;img src=&quot;&#x2F;tech&#x2F;etc-fstab.png&quot; alt=&quot;fstab&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;etc-fstab.png&quot; alt=&quot;fstab&quot; &#x2F;&gt;
+Make the &lt;code&gt;&#x2F;boot&#x2F;efi&lt;&#x2F;code&gt; directory because we did not mount it in the chroot&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;installing-networkmanager&quot;&gt;Installing NetworkManager&lt;&#x2F;h2&gt;
 &lt;p&gt;Install NetworkManager to manage wired and wireless networks.&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;xbps-install NetworkManager
